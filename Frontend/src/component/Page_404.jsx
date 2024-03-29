@@ -1,5 +1,7 @@
 
 import { Link, useNavigate } from 'react-router-dom';
+import image1 from './../assets/404.avif'
+import image2 from './../assets/404.avif'
 
 
 const Page_404 = () => {

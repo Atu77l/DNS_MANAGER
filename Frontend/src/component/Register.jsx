@@ -45,9 +45,9 @@ const Register = () => {
         return hasLowercase && hasUppercase && hasDigit && hasSpecialChars && isLengthValid;
     }
     const handlesubmit = () => {
-        console.log(name,email,username,password,cpassword,address,warn)
+        console.log(name,email,password,cpassword,address,warn)
         if (name && email && password && address) {
-            const data = { "name": name, "email": email, "password": password, "address": address , "role":"jobseeker" };
+            const data = { "name": name, "email": email, "password": password, "address": address , "role":"user" };
             console.log(data,'data')
             if (!checked) {
                 toast('Please Read Terms and Condition and Checked it')
@@ -121,15 +121,6 @@ const Register = () => {
                                 <input type="email" required placeholder="Enter Email"
                                     className="mt-1 outline-0 h-10   border border-[#1565D8] pl-4 ml-4 rounded-lg w-11/12" value={email} onChange={(e) => {
                                         setemail(e.target.value);
-                                    }} />
-                            </div>
-                        </div>
-                        <div className="flex flex-col">
-                            <label className="ml-5 text-[#494949] pl-1">UserName*</label>
-                            <div className="text-center justify-center">
-                                <input type="text" required placeholder="Enter Username"
-                                    className="mt-1 outline-0 h-10   border border-[#1565D8] pl-4 ml-4 rounded-lg w-11/12" value={username} onChange={(e) => {
-                                        setUserName(e.target.value);
                                     }} />
                             </div>
                         </div>

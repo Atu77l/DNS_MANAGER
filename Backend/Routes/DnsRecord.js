@@ -22,16 +22,17 @@ dnsrouter.get('/',async(req,res)=>{
         const data=await record.find();
         return res.status(200).send({"data":data})
     } catch (error) {
-        return res.status(500).json({"error":error})
+        return res.status(500).json({"message":error})
     }
 })
 
 dnsrouter.get('/:id',async(req,res)=>{
     try {
-        const data=await record.find({'_id':req.params.id});
-        return res.status(200).json({"detail":data})
+      const objectId =new mongoose.Types.ObjectId(req.params.id);
+      const data=await record.find({'_id': objectId});
+      return res.status(200).json({"detail":data})
     } catch (error) {
-        return res.status(500).json({"error":error})
+        return res.status(500).json({"message":error})
     }
 })
 
@@ -68,7 +69,24 @@ dnsrouter.post('/api/dns/record', async (req, res) => {
       res.status(500).json({ error: 'Failed to create DNS record' });
     }
   });
-  
+
+// Route to handle CSV data upload
+dnsrouter.post('/upload', async (req, res) => {
+  try {
+      const csvData = req.body; // Assuming CSV data is sent in the request body
+      
+      // Iterate through the CSV data and store each record in MongoDB
+      for (const recordData of csvData) {
+          const record = new Record(recordData);
+          await record.save();
+      }
+
+      res.status(200).json({ message: 'CSV data uploaded successfully' });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 dnsrouter.post('/add',async(req,res) =>{
     try {
@@ -78,27 +96,46 @@ dnsrouter.post('/add',async(req,res) =>{
         const result=await new_record.save();
         return res.status(200).send({"data":result});
     } catch (error) {
-        return res.status(500).send({"error":error})   
+        return res.status(500).json({"message":error})
     }
     
 })
 
 dnsrouter.patch('/update/:id', async(req,res)=>{
     try {
-        const data=record.findOne({_id:req.params.id});
-        const response=await record.updateOne({ _id: req.params.id },{ $set: req.body });
-        return res.status(200).json({"data":response});
+        console.log('jhuk hjhkjhkjhksdfjhlksf')
+        const objectId =new mongoose.Types.ObjectId(req.params.id);
+        const data=await record.findOne({_id:objectId});
+        if(data){
+          console.log('data get',req.body)
+          const response=await record.updateOne({ _id: objectId },{$set: req.body });
+          const result=await record.find();
+          return res.status(200).json({"data":result});
+        }
+        console.log('jkhdfjhksjhkfjhuk')
+        const result=await record.find();
+        return res.status(200).json({"data":result});
     } catch (error) {
-        return res.status(500).json({"error":error})
+         console.log(error,'error')
+        return res.status(500).json({"message":error})
     }
 })
 
 dnsrouter.delete('/delete/:id',async(req,res)=>{
     try {
-        const data=await record.deleteOne({ _id: req.params.id });
-        return res.status(200).json({"data":data});
+      console.log('hekkjkhsfgjuks',req.params.id)
+        const objectId =new mongoose.Types.ObjectId(req.params.id);
+        console.log(objectId)
+        const data=await record.deleteOne({ _id: objectId });
+        if(data.deletedCount>0){
+          const result=await record.find();
+          return res.status(200).json({"data":result})
+        }
+        const result=await record.find();
+        return res.status(200).json({"data":result})
     } catch (error) {
-        return res.status(500).json({"error":"error message"})
+      console.log(error,'error')
+        return res.status(500).json({"message":error})
     }
 })
 

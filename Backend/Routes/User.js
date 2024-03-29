@@ -22,17 +22,16 @@ userrouter.post('/login',async(req,res)=>{
         const data = await user.findOne({ "email": email });
         console.log(process.env.SECRET_KEY)
         const token = jwt.sign({"email":email}, process.env.SECRET_KEY, { expiresIn: '1h' }); // You can customize the expiration time
-        
         if (data) {
             if (password === data.password) {
                 data.token=token;
                 console.log(data,'data')
                 return res.status(200).json({ "status": "success", "data": data,"token":token });
             } else {
-                return res.status(200).json({ "status": "fail", "data": 'Invalid password' });
+                return res.status(401).json({ "status": "fail", "data": 'Invalid password' });
             }
         } else {
-            return res.status(200).json({ "status": "fail", "data": 'Email does not exist' });
+            return res.status(401).json({ "status": "fail", "data": 'Email does not exist' });
         }
     } catch (error) {
         console.error(error);

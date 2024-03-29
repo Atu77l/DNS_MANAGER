@@ -32,8 +32,7 @@ const Login = () => {
         }
         const data = { "email": email, "password": password }
         console.log(data,'data');
-        const config = { method: 'post', maxBodyLength: Infinity, url: LOGIN_URL,headers: {
-                'Content-Type': 'application/json'},data: data };
+        const config = { method: 'post', maxBodyLength: Infinity, url: LOGIN_URL,headers: {'Content-Type': 'application/json'},data: data };
         if (email !== "" && password !== "") {
             axios.request(config)
                 .then((response) => {
@@ -53,12 +52,13 @@ const Login = () => {
                     }
                     setemail("")
                     setpassword("")
-                    setWait(false)
-                    navigate('/list');
+                    setWait(false);
+                    navigate('/');
                 }
                 )
                 .catch((error) => {
-                    toast(error.response.data.message)
+                    // toast(error.response.data.message)
+                    console.log(error,'error')
                     setWait(false);
                     return;
                 });
@@ -94,9 +94,9 @@ const Login = () => {
         <>
             <ToastContainer />
             <div className="flex text-center justify-center mt-5 ">
-                <div className="flex flex-col p-2 bg-white rounded-lg shadow text-left border-blue-600 border-b-4 border-t-4">
-                    <div className="text-[#3F4547] text-3xl font-bold ml-5" >
-                        <img src="" alt="logo" className="h-24 w-24" ></img>
+                <div className="flex flex-col p-2 bg-white rounded-lg shadow text-left border-orange-600 border-b-4 border-t-4">
+                    <div className="text-[#3F4547] text-xl font-bold ml-5" >
+                        <div className="rounded-full bg-blue-400 w-16 p-1 text-center text-white">DNS</div>
                     </div>
                     <div className="text-[#000000] text-3xl mt-5 ml-4" style={{ fontWeight: "700" }}> <h1>Account Login</h1>  </div>
                     <p className="text-[#8692A6] ml-4 mt-1 p-1 h-18">  If you have already registered, you can login with your username and password.</p>

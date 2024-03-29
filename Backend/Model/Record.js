@@ -3,6 +3,9 @@ const mongoose=require('mongoose');
 
 const record=mongoose.Schema(
     {
+        domain:{
+            type:String,
+        },
         type:{
             type:String
         },

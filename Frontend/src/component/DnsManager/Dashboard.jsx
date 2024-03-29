@@ -1,13 +1,23 @@
 import React from 'react'
 import AddRecord from './AddRecord'
 import RecordList from './RecordList'
+import Navbar from '../Navbar'
+import Footer from '../Footer'
+import IntegrateCsv from './IntegrateCsv'
+import GraphChart from './GraphChart'
+import Filter from './Filter'
 
 const Dashboard = () => {
   return (
     <div>
-        <div className=''>Dashboard</div>
+        <Navbar/>
+        <Filter/>
         <AddRecord/>
+        <div className='text-black text-xl flex text-center justify-center'>OR</div>
+        <IntegrateCsv/>
         <RecordList/>
+        <GraphChart/>
+        <div className='fixed bottom-0 w-full'><Footer/></div>
     </div>
 
   )
