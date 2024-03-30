@@ -82,7 +82,7 @@ const DNSRecordList = (props) => {
             <div className="">{record.type}</div>
             <div className="">{record.value}</div>
             <div className="flex justify-center "><button className="text-white bg-red-500 w-36 rounded " onClick={() => deleteRecord(record._id)}>Delete</button></div>
-            <div className="flex justify-center"><button className="text-white bg-blue-500 w-36 rounded" onClick={() => {setShowUpdateBox(true);setRecordType(record.type);setRecordValue(record.value);setUpdateId(record._id)}}>Update</button></div>
+            <div className="flex justify-center"><button className="text-white bg-blue-500 w-36 rounded" onClick={() => {setShowUpdateBox(true);setRecordType(record.type);setRecordValue(record.value);setUpdateId(record._id);setDomain(record.domain)}}>Update</button></div>
           </div>
         ))}
       </div>

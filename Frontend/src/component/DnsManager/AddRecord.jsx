@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ADD_RECORD,GET_RECORD } from './../../constant/Constant'
+import { ADD_RECORD } from './../../constant/Constant'
 import secureLocalStorage from "react-secure-storage";
 import { ToastContainer, toast } from 'react-toastify';
 import Navbar from './../Navbar'
@@ -25,7 +25,7 @@ const DNSRecordForm = ({ onSubmit }) => {
         const result = response?.data?.data;
         toast.success('Data Insert Successfully!!!.')
         console.log("result at insert", result);
-        getRecord();
+        props.setRecordList(result);
         setRecordType('');
         setRecordValue('');
         setDomain('');
@@ -40,22 +40,7 @@ const DNSRecordForm = ({ onSubmit }) => {
       });
 
   };
-  const getRecord = (e) => {
-    const config = { method: 'get', maxBodyLength: Infinity, url: GET_RECORD, headers: { 'Content-Type': 'application/json' } };
-    axios.request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response))
-        const result = response?.data?.data;
-        toast.success('Fetch Data Successfully!!!.')
-        setWait(false)
-        props.setRecordList(result)
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message)
-        setWait(false);
-        return;
-      });
-  };
+
 
   return (
     <>
