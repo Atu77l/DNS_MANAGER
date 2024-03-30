@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import AddRecord from './AddRecord'
 import RecordList from './RecordList'
 import Navbar from '../Navbar'
@@ -8,16 +8,28 @@ import GraphChart from './GraphChart'
 import Filter from './Filter'
 
 const Dashboard = () => {
+  const [recordList,setRecordList]=useState([
+    { "domain": "example.com", "type": "A", "value": "192.168.1.1" },
+    { "domain": "example.com", "type": "A", "value": "192.168.1.2" },
+    { "domain": "example.com", "type": "CNAME", "value": "www.example.com" },
+    { "domain": "example.com", "type": "MX", "value": "10 mail.example.com" },
+    { "domain": "example.com", "type": "TXT", "value": "v=spf1 mx -all" },
+    { "domain": "subdomain.example.com", "type": "A", "value": "192.168.1.3" },
+    { "domain": "subdomain.example.com", "type": "AAAA", "value": "2001:0db8:85a3:0000:0000:8a2e:0370:7334" }
+]
+)
+  const data=[1,2,3,4,5,5,6,6,7,7,8,9]
+  const label=['A','AAAA','CNAME','NAMESERVER','MX','NS','PTR','SOA','SRV','TXT','DNSSEC']
   return (
     <div>
         <Navbar/>
-        <Filter/>
-        <AddRecord/>
+        <Filter recordList={recordList} setRecordList={setRecordList}/>
+        <AddRecord recordList={recordList} setRecordList={setRecordList}/>
         <div className='text-black text-xl flex text-center justify-center'>OR</div>
-        <IntegrateCsv/>
-        <RecordList/>
-        <GraphChart/>
-        <div className='fixed bottom-0 w-full'><Footer/></div>
+        <IntegrateCsv recordList={recordList} setRecordList={setRecordList}/>
+        <RecordList recordList={recordList} setRecordList={setRecordList}/>
+        <GraphChart recordList={recordList} setRecordList={setRecordList} data={data} label={label}/>
+       <Footer/>
     </div>
 
   )

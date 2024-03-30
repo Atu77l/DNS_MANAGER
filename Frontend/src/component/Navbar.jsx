@@ -49,8 +49,8 @@ const Navbar = (props) => {
       <div className="hidden md:flex sm:flex-row bg-blue-500 text-white">
         <div className="flex flex-row">
           <div className='font-[800] text-[25px] mt-2 ml-16 '>DNS</div>
-          <Link to='/'><div className="text-[16px] ml-5 mt-4 hover:text-[blue]">home</div></Link>
-          <Link to='/bucket'><div className=" text-[16px] ml-5 mt-4  hover:text-[blue]">dashboard</div></Link>
+          <Link to='/'><div className="text-[16px] ml-5 mt-4 hover:text-[blue]">Home</div></Link>
+          <Link to='/'><div className=" text-[16px] ml-5 mt-4  hover:text-[blue]">Dashboard</div></Link>
           {admin == 'admin' && <Link to='/admin'><div className="ml-5  mt-4 text-[16px] hover:text-[blue]" onClick={() => { navigate('/admin'); }}>Admin</div></Link>}
         </div>
         {/* <div className="text-xl font-bold ml-10 text-black mt-3">Hello, {name}</div> */}
@@ -89,7 +89,7 @@ const Navbar = (props) => {
         <div className="md:hidden">
           <div className='grid grid-cols-1 mt-0 font-bold  text-xl md:hidden bg-white text-[#232323] w-full'>
             <Link to='/'><div className="hover:bg-blue-500 p-1 text-xl w-full"><HomeIcon />     Home</div></Link>
-            <Link to='/bucket'><div className="hover:bg-blue-500 p-1 text-xl"><ShoppingBasketIcon />    Bucket</div></Link>
+            <Link to='/'><div className="hover:bg-blue-500 p-1 text-xl"><ShoppingBasketIcon />    Dashboard</div></Link>
             <div className="hover:bg-blue-500 p-1 text-xl cursor-pointer" onClick={logoutFunction}><LogoutIcon />     Sign out</div>
           </div>
         </div>

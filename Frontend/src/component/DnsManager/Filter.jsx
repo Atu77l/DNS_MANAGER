@@ -2,23 +2,26 @@ import React, { useState } from 'react';
 import secureLocalStorage from "react-secure-storage";
 import { ToastContainer, toast } from 'react-toastify';
 
-const FilterSearchComponent = ({ onSearch, onFilter }) => {
+const FilterSearchComponent = (props) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterValue, setFilterValue] = useState('');
+  const [filterValue,setFilterValue]=useState('');
 
   const handleSearch = () => {
-    onSearch(searchTerm);
-  };
-
-  const handleFilterChange = (e) => {
-    setFilterValue(e.target.value);
-    onFilter(e.target.value);
+    let result=[]
+    for(let i=0;i<recordList.length;i++)
+    {
+       if(searchTerm==recordList[i].domain || searchTerm==recordList[i].type || searchTerm==recordList[i].value)
+       {
+           result.push(recordList[i])
+       }
+    }
+    props.setRecordList(result);
   };
 
   return (
     <div className='m-5 gap-2 flex flex-row'>
-      <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='bg-gray-200 outline-0 p-1' />
-      <select value={filterValue} onChange={handleFilterChange} className='bg-gray-200 outline-0 p-1'>
+      <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search domain name or type or value." className='bg-gray-200 outline-0 p-1 flex flex-grow' />
+      <select value={filterValue} onChange={(e)=>{setFilterValue(e.target.value)}} className='bg-gray-200 outline-0 p-1'>
         <option value="">All</option>
         <option value="A">A (Address) Record</option>
           <option value="AAAA">AAAA (IPv6 Address) Record</option>

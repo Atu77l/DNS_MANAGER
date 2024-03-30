@@ -5,8 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
 import { Dialog } from "@mui/material";
 
-const DNSRecordList = () => {
-  const [recordList, setRecordList] = useState([]);
+const DNSRecordList = (props) => {
   const [showUpdateBox,setShowUpdateBox] = useState(false); 
   const [recordType,setRecordType] = useState('');
   const [recordValue,setRecordValue] = useState('')
@@ -22,7 +21,7 @@ const DNSRecordList = () => {
         const result = response?.data?.data;
         toast.success('Fetch Data Successfully!!!.')
         setWait(false)
-        setRecordList(result)
+        props.setRecordList(result)
       })
       .catch((error) => {
         toast.error(error.response.data.message)
@@ -37,7 +36,7 @@ const DNSRecordList = () => {
       .then((response) => {
         const result = response?.data?.data;
         toast.success('Deleted Record Successfully!!!.')
-        setRecordList(result)
+        props.setRecordList(result)
       })
       .catch((error) => {
         toast.error(error.response.data.message)
@@ -54,7 +53,7 @@ const DNSRecordList = () => {
         const result = response?.data?.data;
         console.log(response,'rjkishfjs')
         toast.success('Record Updated Successfully!!!.')
-        setRecordList(result)
+        props.setRecordList(result)
         setShowUpdateBox(false);
       })
       .catch((error) => {
@@ -77,7 +76,7 @@ const DNSRecordList = () => {
           <div className="">Delete</div>
           <div className="">Update</div>
         </div>
-        {recordList.map((record, key) => (
+        {props.recordList.map((record, key) => (
           <div key={record._id} className="grid grid-cols-5 p-1" style={{ backgroundColor: key % 2 != 0 ? "lightgray" : "lightgray" }}>
             <div className="">{record.domain}</div>
             <div className="">{record.type}</div>

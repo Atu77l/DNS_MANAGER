@@ -1,65 +1,79 @@
-import React, { useState } from 'react';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, Legend, Tooltip, Title } from 'chart.js';
+import React, { useEffect, useState } from 'react';
+import {Bar } from 'react-chartjs-2';
+import Chart from 'chart.js/auto';
 
-ChartJS.register(
-LineElement,
-CategoryScale,
-LinearScale,
-PointElement,
-Legend,
-Tooltip,
-Title
-);
 
-function LineChart() {
-const labels = ['1', '2', '3'];
-const [data, setData] = useState({
-label: labels,
-datasets: [{
-  label: 'Data of the selected period',
-  data: [3, 6, 9],
-  backgroundColor: [
-  'green'
-],
-  borderColor: [
-  'grey'
-],
-  pointBorderColor: [
-  'green'
-],
-  borderWidth: 1,
-  fill: true,
-  tension: 0.4
-}
-]
+const BarChart = (props) => {
+  const [key, setKey] = useState(0);
 
-});
+  const getBackgroundColor = (context) => {
+    const value = 1;
+    return value > 0 ? 'green' : 'red';
+  };
+  const [chartData, setChartData] = useState({
+    labels: props.label,
+    datasets: [
+      {
+        label: 'DNS Analysis',
+        data: props.data,
+        backgroundColor: getBackgroundColor,
+        borderWidth: 0,
+        borderRadius:6,
+        border:0,
+        width:2,
+      
+      },
+    ],
+  });
+  useEffect(() => {
+    setChartData({
+      labels: props.label,
+      datasets: [
+        {
+          label: 'DNS Analysis',
+          data: props.data,
+          backgroundColor: getBackgroundColor,
+          borderRadius:6,
+          border:0,
+        },
+      ],
+    })
+  }, [props.profit]);
+ 
+  const options = {
+    scales: {
+      x: {
+        grid: {
+          drawBorder: false,
+          drawTicks: false,
+        },
+        ticks: {
+          beginAtZero: true,
+          maxTicksLimit: 100,
+        },
+        barPercentage: 0.1, // Adjust this value to control the width of the bars
+        categoryPercentage: 0.2, // Adjust this value to control the space between bars
+      },
+      y: {
+        beginAtZero: true,
+        maxTicksLimit: 5,
+      },
+    },
+    zoom: {
+      enabled: true,
+      mode: 'x',
+    },
+    pan: {
+      enabled: true,
+      mode: 'x',
+    },
+  };
 
-const options = {
-plugins: {
-legend: true
-},
-scales: {
-y: {
-min: 0,
-max: 16
-}
-}
+  return (
+    <div className='overflow-x-auto'>
+      <Bar data={chartData} options={options}/>
+    </div>
+  );
 };
-return <Line data={data} option={options} />;
-}
-export default LineChart;
 
-//   const chartData = {
-//     labels: ['A', 'CNAME', 'MX', 'TXT'], // Example labels for different record types
-//     datasets: [
-//       {
-//         label: 'Record Type Distribution',
-//         data: data,
-//         backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
-//         borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
-//         borderWidth: 1,
-//       },
-//     ],
-//   };
+export default BarChart;
