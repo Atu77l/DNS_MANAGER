@@ -15,6 +15,15 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:true}));
 app.use(cors());
 
+// .env contain
+// MONGO_URL=
+// YOUR_ACCESS_KEY=
+// YOUR_SECRET_ACCESS_KEY=
+// YOUR_REGION=
+// SECRET_KEY=
+// HOSTED_ZONE_ID=
+
+
 connectDB();
 app.get('/api',(req,res)=>{
     res.send("Hello world");

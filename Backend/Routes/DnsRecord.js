@@ -2,14 +2,19 @@ const mongoose=require('mongoose')
 const express = require('express');
 const dnsrouter = express.Router();
 const record=require('./../Model/Record')
+// dotenv import
+require('dotenv').config();
 const AWS = require('aws-sdk');
+console.log(process.env.YOUR_ACCESS_KEY, process.env.YOUR_SECRET_ACCESS_KEY, process.env.YOUR_REGION);
 
+// Update AWS configuration with environment variables
 AWS.config.update({
-    accessKeyId: process.env.YOUR_ACCESS_KEY,
-    secretAccessKey: process.env.YOUR_SECRET_ACCESS_KEY,
-    region: process.env.YOUR_REGION  // Change to your desired AWS region
+  accessKeyId: process.env.YOUR_ACCESS_KEY,
+  secretAccessKey: process.env.YOUR_SECRET_ACCESS_KEY,
+  region: process.env.YOUR_REGION // Change to your desired AWS region
 });
 
+// Create a Route53 object
 const route53 = new AWS.Route53();
 
   
@@ -37,19 +42,19 @@ dnsrouter.get('/:id',async(req,res)=>{
 })
 
 // Define a route for creating a DNS record
-dnsrouter.post('/api/dns/record', async (req, res) => {
-    const { domain, recordType, value } = req.body;
-  
+dnsrouter.post('/aws', async (req, res) => {
+    const { domain, type, value } = req.body;
+    console.log(domain,type,value,'data');
     // Construct params object for creating the DNS record
     const params = {
-      HostedZoneId: 'YOUR_HOSTED_ZONE_ID', // Replace with your hosted zone ID
+      HostedZoneId: process.env.HOSTED_ZONE_ID, // Replace with your hosted zone ID
       ChangeBatch: {
         Changes: [
           {
             Action: 'UPSERT',
             ResourceRecordSet: {
               Name: domain,
-              Type: recordType,
+              Type: type,
               TTL: 300,
               ResourceRecords: [
                 { Value: value }

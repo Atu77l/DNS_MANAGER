@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { ADD_RECORD,GET_RECORD} from './../../constant/Constant'
+import { ADD_RECORD,AWS_RECORD,GET_RECORD} from './../../constant/Constant'
 import secureLocalStorage from "react-secure-storage";
 import { ToastContainer, toast } from 'react-toastify';
 import Navbar from './../Navbar'
@@ -23,6 +23,7 @@ const DNSRecordForm = (props) => {
     axios.request(config)
       .then((response) => {
         const result = response?.data?.data;
+        awshandleSubmit();
         toast.success('Data Insert Successfully!!!.')
         console.log("result at insert", result);
         setRecordType('');
@@ -36,6 +37,23 @@ const DNSRecordForm = (props) => {
         console.log(error,'error')
         // toast(error.response.data.message)
         setWait(false);
+        return;
+      });
+
+  };
+  const awshandleSubmit = (e) => {
+    const data = { domain:domain, type: recordType, value: recordValue };
+    console.log(data, 'data');
+    const config = { method: 'post', maxBodyLength: Infinity, url: AWS_RECORD, headers: { 'Content-Type': 'application/json' }, data: data };
+    axios.request(config)
+      .then((response) => {
+        const result = response?.data?.data;
+        toast.success('Record Added Successfully In AWS!!!.')
+      }
+      )
+      .catch((error) => {
+        console.log(error,'error')
+        // toast(error.response.data.message)
         return;
       });
 

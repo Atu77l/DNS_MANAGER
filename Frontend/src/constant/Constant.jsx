@@ -10,3 +10,6 @@ export const GET_RECORD=BASE_URL + '/record'
 export const UPDATE_RECORD=BASE_URL + '/record/update'
 export const DELETE_RECORD=BASE_URL + '/record/delete'
 export const UPLOAD_CSV=BASE_URL + '/record/upload'
+
+// aws record
+export const AWS_RECORD=BASE_URL + '/record/aws'
