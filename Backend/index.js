@@ -16,9 +16,11 @@ app.use(bodyparser.urlencoded({extended:true}));
 app.use(cors());
 
 connectDB();
-
-app.use('/users', userRoutes);
-app.use('/record', recordRoutes)
+app.get('/api',(req,res)=>{
+    res.send("Hello world");
+})
+app.use('/api/users', userRoutes);
+app.use('/api/record', recordRoutes)
 
 app.listen(4000,()=>{
     console.log("connected to port");
