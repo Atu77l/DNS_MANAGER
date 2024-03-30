@@ -94,7 +94,6 @@ dnsrouter.post('/add',async(req,res) =>{
         const data=req.body;
         const new_record=new record(data);
         const result=await new_record.save();
-        result = await record.find();
         return res.status(200).send({"data":result});
     } catch (error) {
         return res.status(500).json({"message":error})

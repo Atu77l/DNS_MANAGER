@@ -1,4 +1,4 @@
-// const BASE_URL='http://localhost:4000'
+// const BASE_URL='http://localhost:4000/api'
 const BASE_URL='http://3.110.83.6/api'
 // All user api
 export const REGISTER_URL=BASE_URL + '/users/register'

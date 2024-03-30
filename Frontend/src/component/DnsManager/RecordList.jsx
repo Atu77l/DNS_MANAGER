@@ -91,9 +91,10 @@ const DNSRecordList = (props) => {
           setShowUpdateBox(false)
         }
       }} sx={{ borderRadius: "10px",width:"100%" }}>
+        <div className="bg-blue-600 h-8 w-full text-xl pl-5 text-white">Update</div>
         <div className="m-5">
         <div className=''>Domain:</div>
-        <input type="text" value={domain} onChange={(e) => setDomain(e.target.value)} className='bg-gray-200 outline-0 border-0' />
+        <input type="text" value={domain} onChange={(e) => setDomain(e.target.value)} className='bg-gray-200 outline-0 border-0 w-full' />
           <div className=''>Record Type:</div>
         <select value={recordType} onChange={(e) => setRecordType(e.target.value)} className='bg-gray-200 outline-0 border-0'>
           <option value="">Select Record Type</option>
